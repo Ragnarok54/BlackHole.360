@@ -18,7 +18,7 @@ public static class DependencyInjection
         services.AddDbContext<BlackHoleContext>(options => options.UseSqlServer(connectionString));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped<IRepository<Employee>, Repository<Employee>>();
+        services.AddScoped<IRepository<User>, Repository<User>>();
 
         return services;
     }

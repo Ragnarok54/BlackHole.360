@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHole.360.Common", "Bla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHole.360.BusinessLogic", "BlackHole.360.BusinessLogic\BlackHole.360.BusinessLogic.csproj", "{DCB0D553-C60C-4259-A7AE-F0EFB781838B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHole.360.Functions", "BlackHole.360.Functions\BlackHole.360.Functions.csproj", "{D20A0DA6-0F2B-4DF9-B758-0BD77CFA3057}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DCB0D553-C60C-4259-A7AE-F0EFB781838B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCB0D553-C60C-4259-A7AE-F0EFB781838B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCB0D553-C60C-4259-A7AE-F0EFB781838B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D20A0DA6-0F2B-4DF9-B758-0BD77CFA3057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D20A0DA6-0F2B-4DF9-B758-0BD77CFA3057}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D20A0DA6-0F2B-4DF9-B758-0BD77CFA3057}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D20A0DA6-0F2B-4DF9-B758-0BD77CFA3057}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

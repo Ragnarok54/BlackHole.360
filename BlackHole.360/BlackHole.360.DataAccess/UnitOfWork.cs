@@ -10,9 +10,9 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly BlackHoleContext _context;
 
-    private IRepository<Employee> _employeeRepository;
+    private IRepository<User> _employeeRepository;
 
-    public IRepository<Employee> EmployeeRepository => _employeeRepository ??= new Repository<Employee>(_context);
+    public IRepository<User> EmployeeRepository => _employeeRepository ??= new Repository<User>(_context);
 
 
     public UnitOfWork(BlackHoleContext context)
