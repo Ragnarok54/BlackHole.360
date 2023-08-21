@@ -5,6 +5,7 @@ on:
     branches: [ $default-branch ]
   pull_request:
     branches: [ $default-branch, feat/* ]
+  workflow_dispatch:
 
 jobs:
   build:
