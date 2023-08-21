@@ -30,3 +30,35 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
       working-directory: BlackHole.360
+      
+    - name: Publish
+      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      working-directory: BlackHole.360
+      
+    - name: Upload artifact for deployment job 
+      uses: actions/upload-artifact@v2 
+      with: 
+        name: Blackhole.360
+        path: ${{env.DOTNET_ROOT}}/myapp 
+
+deploy: 
+  runs-on: ubuntu-latest 
+  needs: build 
+  environment: 
+    name: 'Production' 
+    url: ${{ steps.deploy-to-webapp.outputs.webapp-url }} 
+
+  steps: 
+    - name: Download artifact from build job 
+      uses: actions/download-artifact@v2 
+      with: 
+        name: Blackhole.360 
+
+    - name: Deploy to Azure Web App 
+      id: deploy-to-webapp 
+      uses: azure/webapps-deploy@v2 
+      with: 
+        app-name: 'app-blackhole360-shared-weu' 
+        slot-name: 'Production' 
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5DDDE33FDE4F464CA73AEF50F9DDB5CC }} 
+        package: . 
