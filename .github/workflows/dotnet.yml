@@ -23,7 +23,7 @@ jobs:
       working-directory: BlackHole.360
 
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build BlackHole.360.Api --no-restore
       working-directory: BlackHole.360
 
     - name: Test
