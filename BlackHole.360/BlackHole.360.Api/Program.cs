@@ -1,13 +1,18 @@
+using BlackHole._360.Api.Helpers;
 using BlackHole._360.BusinessLogic;
 using BlackHole._360.Common;
 using BlackHole._360.DataAccess;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers()
+builder.Services.AddControllers(options =>
+                {
+                    options.Conventions.Add(new RouteTokenTransformerConvention(new KebabParameterTransformer()));
+                })
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
