@@ -1,7 +1,7 @@
-﻿using BlackHole._360.DataAccess.Repositories;
+﻿using BlackHole._360.DataAccess.Abstractions;
+using BlackHole._360.DataAccess.Abstractions.Repositories;
+using BlackHole._360.DataAccess.Repositories;
 using BlackHole._360.Domain.Entities;
-using BlackHole._360.Domain.Interfaces;
-using BlackHole._360.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,5 +21,12 @@ public static class DependencyInjection
         services.AddScoped<IRepository<User>, Repository<User>>();
 
         return services;
+    }
+
+    public static IHealthChecksBuilder AddDataAccessHealthChecks(this IHealthChecksBuilder healthCheckBuilder)
+    {
+        healthCheckBuilder.AddDbContextCheck<BlackHoleContext>();
+
+        return healthCheckBuilder;
     }
 }

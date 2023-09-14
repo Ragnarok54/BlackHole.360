@@ -1,7 +1,9 @@
-using BlackHole._360.Api.Helpers;
+using BlackHole._360.Api.Configuration;
+using BlackHole._360.Api.Filters;
 using BlackHole._360.BusinessLogic;
 using BlackHole._360.Common;
 using BlackHole._360.DataAccess;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -12,6 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(options =>
                 {
                     options.Conventions.Add(new RouteTokenTransformerConvention(new KebabParameterTransformer()));
+
+                    options.Filters.Add<HttpExceptionFilter>();
+                    options.Filters.Add(new ProducesResponseTypeAttribute(typeof(NullReferenceException), StatusCodes.Status404NotFound));
+                    options.Filters.Add(new ProducesResponseTypeAttribute(typeof(string), StatusCodes.Status500InternalServerError));
                 })
                 .AddJsonOptions(options =>
                 {
@@ -27,6 +33,9 @@ builder.Services.Configure<RouteOptions>(options =>
 builder.Services.AddConfiguration(builder.Configuration);
 builder.Services.AddDataAccess(builder.Configuration);
 builder.Services.AddBusinessServices();
+
+builder.Services.AddHealthChecks()
+                .AddDataAccessHealthChecks();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -56,6 +65,8 @@ app.UseCors(c => c.AllowAnyHeader()
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
+app.UseHealthChecks("/api/health");
 
 app.MapControllers();
 

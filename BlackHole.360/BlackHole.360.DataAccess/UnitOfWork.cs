@@ -1,8 +1,8 @@
-﻿using BlackHole._360.DataAccess.Repositories;
+﻿using BlackHole._360.DataAccess.Abstractions;
+using BlackHole._360.DataAccess.Abstractions.Repositories;
+using BlackHole._360.DataAccess.Repositories;
+using BlackHole._360.Domain.Abstractions.Interfaces;
 using BlackHole._360.Domain.Entities;
-using BlackHole._360.Domain.Interfaces;
-using BlackHole._360.Domain.Interfaces.Entities;
-using BlackHole._360.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlackHole._360.DataAccess;

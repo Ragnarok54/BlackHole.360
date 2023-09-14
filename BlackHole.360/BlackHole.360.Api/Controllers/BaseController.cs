@@ -3,7 +3,7 @@
 namespace BlackHole._360.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("/api/[controller]")]
 public abstract class BaseController : ControllerBase
 {
 

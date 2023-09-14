@@ -3,17 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHole.360.Api", "BlackHole.360.Api\BlackHole.360.Api.csproj", "{159C7F01-9A46-4ABF-906C-AFB1D7623BDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackHole.360.Api", "BlackHole.360.Api\BlackHole.360.Api.csproj", "{159C7F01-9A46-4ABF-906C-AFB1D7623BDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHole.360.Domain", "BlackHole.360.Domain\BlackHole.360.Domain.csproj", "{355C71E5-6110-436A-A59D-55D7F5A5B04D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackHole.360.Domain", "BlackHole.360.Domain\BlackHole.360.Domain.csproj", "{355C71E5-6110-436A-A59D-55D7F5A5B04D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHole.360.DataAccess", "BlackHole.360.DataAccess\BlackHole.360.DataAccess.csproj", "{F2C5CB76-B5ED-4581-A881-4E6D970B80EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackHole.360.DataAccess", "BlackHole.360.DataAccess\BlackHole.360.DataAccess.csproj", "{F2C5CB76-B5ED-4581-A881-4E6D970B80EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHole.360.Common", "BlackHole.360.Common\BlackHole.360.Common.csproj", "{75589334-D791-4E8C-92EC-2F2DD1CCEDD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackHole.360.Common", "BlackHole.360.Common\BlackHole.360.Common.csproj", "{75589334-D791-4E8C-92EC-2F2DD1CCEDD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHole.360.BusinessLogic", "BlackHole.360.BusinessLogic\BlackHole.360.BusinessLogic.csproj", "{DCB0D553-C60C-4259-A7AE-F0EFB781838B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackHole.360.BusinessLogic", "BlackHole.360.BusinessLogic\BlackHole.360.BusinessLogic.csproj", "{DCB0D553-C60C-4259-A7AE-F0EFB781838B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHole.360.Functions", "BlackHole.360.Functions\BlackHole.360.Functions.csproj", "{D20A0DA6-0F2B-4DF9-B758-0BD77CFA3057}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackHole.360.Functions", "BlackHole.360.Functions\BlackHole.360.Functions.csproj", "{D20A0DA6-0F2B-4DF9-B758-0BD77CFA3057}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHole.360.Domain.Abstractions", "BlackHole.360.Domain.Abstractions\BlackHole.360.Domain.Abstractions.csproj", "{5EF4F57A-E43F-4E0C-9882-89CFF6908D3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHole.360.DataAccess.Abstractions", "BlackHole.360.DataAccess.Abstractions\BlackHole.360.DataAccess.Abstractions.csproj", "{6C8B190E-8FE9-41B8-8827-56D294F00CAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{D20A0DA6-0F2B-4DF9-B758-0BD77CFA3057}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D20A0DA6-0F2B-4DF9-B758-0BD77CFA3057}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D20A0DA6-0F2B-4DF9-B758-0BD77CFA3057}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EF4F57A-E43F-4E0C-9882-89CFF6908D3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EF4F57A-E43F-4E0C-9882-89CFF6908D3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EF4F57A-E43F-4E0C-9882-89CFF6908D3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EF4F57A-E43F-4E0C-9882-89CFF6908D3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C8B190E-8FE9-41B8-8827-56D294F00CAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C8B190E-8FE9-41B8-8827-56D294F00CAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C8B190E-8FE9-41B8-8827-56D294F00CAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C8B190E-8FE9-41B8-8827-56D294F00CAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

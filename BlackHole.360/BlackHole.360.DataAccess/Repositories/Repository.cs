@@ -1,5 +1,5 @@
-﻿using BlackHole._360.Domain.Interfaces.Entities;
-using BlackHole._360.Domain.Interfaces.Repositories;
+﻿using BlackHole._360.DataAccess.Abstractions.Repositories;
+using BlackHole._360.Domain.Abstractions.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

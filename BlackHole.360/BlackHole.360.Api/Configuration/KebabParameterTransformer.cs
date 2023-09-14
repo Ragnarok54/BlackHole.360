@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace BlackHole._360.Api.Helpers;
+namespace BlackHole._360.Api.Configuration;
 
 public partial class KebabParameterTransformer : IOutboundParameterTransformer
 {

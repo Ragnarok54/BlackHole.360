@@ -1,4 +1,4 @@
-﻿using BlackHole._360.Domain.Interfaces.Entities;
+﻿using BlackHole._360.Domain.Abstractions.Interfaces;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlackHole._360.DataAccess.Configurations;
