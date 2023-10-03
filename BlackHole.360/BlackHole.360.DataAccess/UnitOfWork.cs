@@ -12,7 +12,7 @@ public class UnitOfWork : IUnitOfWork
 
     private IRepository<User> _employeeRepository;
 
-    public IRepository<User> EmployeeRepository => _employeeRepository ??= new Repository<User>(_context);
+    public IRepository<User> UserRepository => _employeeRepository ??= new Repository<User>(_context);
 
 
     public UnitOfWork(BlackHoleContext context)

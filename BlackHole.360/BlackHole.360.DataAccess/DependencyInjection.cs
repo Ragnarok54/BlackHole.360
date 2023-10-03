@@ -29,4 +29,16 @@ public static class DependencyInjection
 
         return healthCheckBuilder;
     }
+
+    public static IServiceProvider MigrateDatabase(this IServiceProvider serviceProvider)
+    {
+        using (var scope = serviceProvider.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<BlackHoleContext>();
+
+            dbContext.Database.Migrate();
+        }
+
+        return serviceProvider;
+    }
 }

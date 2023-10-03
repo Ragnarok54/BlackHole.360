@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlackHole.360.Domain\BlackHole.360.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -30,9 +30,9 @@ builder.Services.Configure<RouteOptions>(options =>
 });
 
 
-builder.Services.AddConfiguration(builder.Configuration);
-builder.Services.AddDataAccess(builder.Configuration);
-builder.Services.AddBusinessServices();
+builder.Services.AddConfiguration(builder.Configuration)
+                .AddDataAccess(builder.Configuration)
+                .AddBusinessServices();
 
 builder.Services.AddHealthChecks()
                 .AddDataAccessHealthChecks();
@@ -51,6 +51,8 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
+app.Services.MigrateDatabase();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
