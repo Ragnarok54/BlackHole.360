@@ -5,7 +5,7 @@ namespace BlackHole._360.Domain.Entities;
 
 public class User : BaseEntity, ISoftDelete
 {
-    public Guid InternalId { get; set; }
+    public string InternalId { get; set; }
     public required string Email { get; set; }
     public Enums.JobTitle JobTitleId { get; set; }
     public Guid? SubgroupId { get; set; }

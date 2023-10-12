@@ -18,7 +18,7 @@ public interface IRepository<TEntity> where TEntity : class
     void Add(TEntity entity);
     Task AddAsync(TEntity entity);
     void AddRange(IEnumerable<TEntity> entities);
-    Task AddRangeAsync(IEnumerable<TEntity> entities);
+    Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
     void Remove(TEntity entity);
     void RemoveRange(IEnumerable<TEntity> entities);
 }

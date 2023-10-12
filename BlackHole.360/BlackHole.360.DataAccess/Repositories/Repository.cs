@@ -54,8 +54,8 @@ internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     public virtual void AddRange(IEnumerable<TEntity> entities) 
         => _context.Set<TEntity>().AddRange(entities);
 
-    public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities)
-        => await _context.Set<TEntity>().AddRangeAsync(entities);
+    public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+        => await _context.Set<TEntity>().AddRangeAsync(entities, cancellationToken);
 
     public void Remove(TEntity entity)
     {

@@ -6,14 +6,27 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>BlackHole._360.Functions</RootNamespace>
+    <UserSecretsId>93bf3066-7b61-49ca-b674-dd3b24e0cad9</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" Version="1.10.1" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.1" />
+    <PackageReference Include="Azure.Storage.Files.Shares" Version="12.1.0" />
+    <PackageReference Include="Azure.Storage.Queues" Version="12.11.1" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.19.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Storage.Blobs" Version="6.0.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Timer" Version="4.2.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.14.1" />
+    <PackageReference Include="Microsoft.Extensions.Azure" Version="1.5.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Microsoft.Graph" Version="5.27.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.56.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlackHole.360.BusinessLogic\BlackHole.360.BusinessLogic.csproj" />
+    <ProjectReference Include="..\BlackHole.360.Common\BlackHole.360.Common.csproj" />
+    <ProjectReference Include="..\BlackHole.360.DataAccess\BlackHole.360.DataAccess.csproj" />
+    <ProjectReference Include="..\BlackHole.360.Domain\BlackHole.360.Domain.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
