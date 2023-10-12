@@ -5,7 +5,7 @@ namespace BlackHole._360.DataAccess.Abstractions.Repositories;
 public interface IRepository<TEntity> where TEntity : class
 {
     TEntity? Get(Guid guid);
-    Task<TEntity?> GetAsync(Guid guid);
+    Task<TEntity?> GetAsync(Guid guid, CancellationToken cancellationToken = default);
 
     IEnumerable<TEntity> GetAll();
     Task<IEnumerable<TEntity>> GetAllAsync();

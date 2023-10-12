@@ -5,7 +5,10 @@ namespace BlackHole._360.DataAccess.Abstractions;
 
 public interface IUnitOfWork : IDisposable
 {
-    IRepository<User> UserRepository { get; }
+    IPaginatedRepository<User> UserRepository { get; }
+    IRepository<Department> DepartmentRepository { get; }
+    IRepository<Group> GroupRepository { get; }
+    IRepository<SubGroup> SubGroupRepository { get; }
 
 
     int SaveChanges();

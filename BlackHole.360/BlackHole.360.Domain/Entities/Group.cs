@@ -8,4 +8,5 @@ public class Group : BaseEntity
 
 
     public virtual Department Department { get; set; }
+    public virtual ICollection<SubGroup> SubGroups { get; set; }
 }

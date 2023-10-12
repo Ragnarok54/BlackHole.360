@@ -20,7 +20,7 @@ public class ImportFunctions
     {
         _logger = loggerFactory.CreateLogger<ImportFunctions>();
     }
-
+    
     [Function("ImportActiveDirectoryUsers")]
     public async Task ImportActiveDirectoryUsersAsync([TimerTrigger("* * * * * *", RunOnStartup = IS_DEBUG)] TimerInfo timerInfo, CancellationToken cancellationToken)
     {

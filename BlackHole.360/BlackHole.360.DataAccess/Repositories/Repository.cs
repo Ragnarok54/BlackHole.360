@@ -20,8 +20,8 @@ internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     public TEntity? Get(Guid guid)
         => _context.Set<TEntity>().Find(guid);
 
-    public async Task<TEntity?> GetAsync(Guid guid)
-        => await _context.Set<TEntity>().FindAsync(guid);
+    public async Task<TEntity?> GetAsync(Guid guid, CancellationToken cancellationToken = default)
+        => await _context.Set<TEntity>().FindAsync(new object?[] { guid }, cancellationToken: cancellationToken);
 
     public IEnumerable<TEntity> GetAll()
         => _context.Set<TEntity>().ToList();

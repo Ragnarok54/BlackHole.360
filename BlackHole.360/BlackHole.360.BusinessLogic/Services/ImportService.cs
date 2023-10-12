@@ -1,4 +1,5 @@
-﻿using BlackHole._360.DataAccess.Abstractions;
+﻿using BlackHole._360.BusinessLogic.DTO.User;
+using BlackHole._360.DataAccess.Abstractions;
 using BlackHole._360.Domain.Entities;
 using System.Text.Json;
 
