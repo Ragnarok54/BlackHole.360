@@ -20,8 +20,8 @@ internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     public TEntity? Get(Guid guid)
         => _context.Set<TEntity>().Find(guid);
 
-    public async Task<TEntity?> GetAsync(Guid guid)
-        => await _context.Set<TEntity>().FindAsync(guid);
+    public async Task<TEntity?> GetAsync(Guid guid, CancellationToken cancellationToken = default)
+        => await _context.Set<TEntity>().FindAsync(new object?[] { guid }, cancellationToken: cancellationToken);
 
     public IEnumerable<TEntity> GetAll()
         => _context.Set<TEntity>().ToList();
@@ -48,14 +48,14 @@ internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     public virtual void Add(TEntity entity)
         => _context.Set<TEntity>().Add(entity);
 
-    public virtual async Task AddAsync(TEntity entity)
-        => await _context.Set<TEntity>().AddAsync(entity);
+    public virtual async Task AddAsync(TEntity entity, CancellationToken cancellationToken)
+        => await _context.Set<TEntity>().AddAsync(entity, cancellationToken);
 
     public virtual void AddRange(IEnumerable<TEntity> entities) 
         => _context.Set<TEntity>().AddRange(entities);
 
-    public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities)
-        => await _context.Set<TEntity>().AddRangeAsync(entities);
+    public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+        => await _context.Set<TEntity>().AddRangeAsync(entities, cancellationToken);
 
     public void Remove(TEntity entity)
     {

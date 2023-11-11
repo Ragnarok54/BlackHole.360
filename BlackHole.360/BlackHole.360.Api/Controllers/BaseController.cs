@@ -6,5 +6,5 @@ namespace BlackHole._360.Api.Controllers;
 [Route("/api/[controller]")]
 public abstract class BaseController : ControllerBase
 {
-
+    public Guid CurrentUserId {  get; set; }
 }

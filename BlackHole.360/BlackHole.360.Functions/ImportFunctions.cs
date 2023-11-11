@@ -1,4 +1,7 @@
 using Azure.Identity;
+
+using BlackHole._360.BusinessLogic.DTO.Import;
+using BlackHole._360.BusinessLogic.Services;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
@@ -15,14 +18,16 @@ public class ImportFunctions
 #endif
 
     private readonly ILogger _logger;
+    private readonly ImportService _importService;
 
-    public ImportFunctions(ILoggerFactory loggerFactory)
+    public ImportFunctions(ILoggerFactory loggerFactory, ImportService importService)
     {
         _logger = loggerFactory.CreateLogger<ImportFunctions>();
+        _importService = importService;
     }
-
-    [Function("ImportActiveDirectoryUsers")]
-    public async Task ImportActiveDirectoryUsersAsync([TimerTrigger("* * * * * *", RunOnStartup = IS_DEBUG)] TimerInfo timerInfo, CancellationToken cancellationToken)
+    
+    [Function(nameof(DownloadActiveDirectoryUsers))]
+    public async Task DownloadActiveDirectoryUsers([TimerTrigger("* * * * * *", RunOnStartup = IS_DEBUG)] TimerInfo timerInfo, CancellationToken cancellationToken)
     {
         _logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
         _logger.LogInformation($"Next timer schedule at: {timerInfo.ScheduleStatus?.Next}");
@@ -55,15 +60,29 @@ public class ImportFunctions
 
         await pageIterator.IterateAsync(cancellationToken);
 
-        var mappedUsers = list.Select(u => new
+        var mappedUsers = list.Select(u => new ImportUserDto
         {
-            u.Id,
-            u.DisplayName,
-            Email = u.UserPrincipalName,
-            u.Department,
-            Role = u.JobTitle,
-            Type = u.UserType,
-            DeletedAt = u.DeletedDateTime,
+            InternalId = u.Id ?? string.Empty,
+            DisplayName = u.DisplayName ?? string.Empty,
+            Email = u.UserPrincipalName ?? string.Empty,
+            JobTitle = u.JobTitle ?? string.Empty,
+            Department = u.Department ?? string.Empty,
+            //DeletedAt = u.DeletedDateTime!.Value,
+            //Deleted = 
         }).ToList();
+
+        //var client = new BlobContainerClient(new Uri("https://127.0.0.1:10000/devstoreaccount1/container-name"), new DefaultAzureCredential());
+        //await _importService.ImportUsersAsync(mappedUsers);
+        _logger.LogInformation($"C# Timer trigger function finished file upload at: {DateTime.Now}");
+    }
+
+
+    [Function(nameof(ImportActiveDirectoryUsers))]
+    public async Task ImportActiveDirectoryUsers([BlobTrigger("samples-workitems/{name}", Connection = "Storage")] Stream stream, string name)
+    {
+        using var blobStreamReader = new StreamReader(stream);
+        var content = await blobStreamReader.ReadToEndAsync();
+        
+        _logger.LogInformation($"C# Blob trigger function Processed blob\n Name: {name} \n Data: {content}");
     }
 }

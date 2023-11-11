@@ -1,22 +1,34 @@
 ﻿using BlackHole._360.DataAccess.Abstractions;
 using BlackHole._360.DataAccess.Abstractions.Repositories;
-using BlackHole._360.DataAccess.Repositories;
 using BlackHole._360.Domain.Abstractions.Interfaces;
 using BlackHole._360.Domain.Entities;
+
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BlackHole._360.DataAccess;
 public class UnitOfWork : IUnitOfWork
 {
+    private readonly IServiceProvider _serviceProvider;
     private readonly BlackHoleContext _context;
 
-    private IRepository<User> _employeeRepository;
+    private IPaginatedRepository<User> _userRepository = null!;
+    private IRepository<Department> _departmentRepository = null!;
+    private IRepository<Group> _groupRepository = null!;
+    private ILocalRepository<SubGroup> _subGroupRepository = null!;
+    private IFeedbackRepository _feedbackRepository = null!;
 
-    public IRepository<User> EmployeeRepository => _employeeRepository ??= new Repository<User>(_context);
+
+    public IPaginatedRepository<User> UserRepository => InitService(ref _userRepository);
+    public IRepository<Department> DepartmentRepository => InitService(ref _departmentRepository);
+    public IRepository<Group> GroupRepository => InitService(ref _groupRepository);
+    public ILocalRepository<SubGroup> SubGroupRepository => InitService(ref _subGroupRepository);
+    public IFeedbackRepository FeedbackRepository => InitService(ref _feedbackRepository);
 
 
-    public UnitOfWork(BlackHoleContext context)
+    public UnitOfWork(IServiceProvider serviceProvider, BlackHoleContext context)
     {
+        _serviceProvider = serviceProvider;
         _context = context;
     }
 
@@ -35,13 +47,13 @@ public class UnitOfWork : IUnitOfWork
         }
     }
 
-    public async Task<int> SaveChangesAsync()
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {
         try
         {
             PerformExtraOperations();
 
-            return await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync(cancellationToken);
         }
         catch (Exception ex)
         {
@@ -49,6 +61,9 @@ public class UnitOfWork : IUnitOfWork
             throw ex;
         }
     }
+
+    private T InitService<T>(ref T service)
+        => service ??= _serviceProvider.GetService<T>() ?? throw new ArgumentNullException(nameof(service), "Service has not been configured correctly for DI");
 
     private void PerformExtraOperations()
     {

@@ -4,7 +4,7 @@ using Microsoft.Data.SqlClient;
 
 namespace BlackHole._360.Api.Filters;
 
-public class HttpExceptionFilter : IActionFilter, IOrderedFilter
+internal class HttpExceptionFilter : IActionFilter, IOrderedFilter
 {
     private readonly ILogger _logger;
     private readonly IDictionary<Type, Func<Exception, ObjectResult>> _exceptionBehaviours;
@@ -17,7 +17,8 @@ public class HttpExceptionFilter : IActionFilter, IOrderedFilter
         _exceptionBehaviours = new Dictionary<Type, Func<Exception, ObjectResult>>
         {
             { typeof(SqlException), GetSqlExceptionResult },
-            { typeof(NullReferenceException), GetNullReferenceExceptionResult },
+            { typeof(NullReferenceException), GetNotFoundExceptionResult },
+            { typeof(ArgumentException), GetNotFoundExceptionResult },
         };
     }
 
@@ -59,7 +60,7 @@ public class HttpExceptionFilter : IActionFilter, IOrderedFilter
             StatusCode = StatusCodes.Status500InternalServerError,
         };
 
-    private ObjectResult GetNullReferenceExceptionResult(Exception exception)
+    private ObjectResult GetNotFoundExceptionResult(Exception exception)
         => new(exception.Message)
         {
             StatusCode = StatusCodes.Status404NotFound,

@@ -18,7 +18,10 @@ public static class DependencyInjection
         services.AddDbContext<BlackHoleContext>(options => options.UseSqlServer(connectionString));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped<IRepository<User>, Repository<User>>();
+        services.AddScoped<IPaginatedRepository<User>, PaginatedRepository<User>>();
+        services.AddScoped<IRepository<Department>, Repository<Department>>();
+        services.AddScoped<IRepository<Group>, Repository<Group>>();
+        services.AddScoped<IRepository<SubGroup>, Repository<SubGroup>>();
 
         return services;
     }
@@ -28,5 +31,17 @@ public static class DependencyInjection
         healthCheckBuilder.AddDbContextCheck<BlackHoleContext>();
 
         return healthCheckBuilder;
+    }
+
+    public static IServiceProvider MigrateDatabase(this IServiceProvider serviceProvider)
+    {
+        using (var scope = serviceProvider.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<BlackHoleContext>();
+
+            dbContext.Database.Migrate();
+        }
+
+        return serviceProvider;
     }
 }

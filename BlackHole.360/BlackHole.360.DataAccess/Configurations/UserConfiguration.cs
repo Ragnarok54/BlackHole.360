@@ -8,11 +8,12 @@ internal class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.ToTable(nameof(User));
-
+        builder.ConfigureBaseEntity();
         builder.ConfigureSoftDelete();
 
-        builder.HasKey(e => e.Id);
-
+        builder.HasOne(u => u.SubGroup)
+               .WithMany(sg => sg.Users)
+               .HasPrincipalKey(sg => sg.Id)
+               .HasForeignKey(u => u.SubgroupId);
     }
 }
