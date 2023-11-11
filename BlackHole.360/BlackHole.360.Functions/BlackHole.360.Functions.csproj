@@ -9,18 +9,18 @@
     <UserSecretsId>93bf3066-7b61-49ca-b674-dd3b24e0cad9</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.10.1" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.1" />
-    <PackageReference Include="Azure.Storage.Files.Shares" Version="12.1.0" />
-    <PackageReference Include="Azure.Storage.Queues" Version="12.11.1" />
-    <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.19.0" />
-    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Storage.Blobs" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Timer" Version="4.2.0" />
-    <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.14.1" />
-    <PackageReference Include="Microsoft.Extensions.Azure" Version="1.5.0" />
+    <PackageReference Include="Azure.Identity" Version="1.10.3" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.19.0" />
+    <PackageReference Include="Azure.Storage.Files.Shares" Version="12.17.0" />
+    <PackageReference Include="Azure.Storage.Queues" Version="12.17.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.20.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Storage.Blobs" Version="6.2.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Timer" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.16.1" />
+    <PackageReference Include="Microsoft.Extensions.Azure" Version="1.7.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Graph" Version="5.27.0" />
-    <PackageReference Include="Microsoft.Identity.Client" Version="4.56.0" />
+    <PackageReference Include="Microsoft.Graph" Version="5.34.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.57.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BlackHole.360.BusinessLogic\BlackHole.360.BusinessLogic.csproj" />
