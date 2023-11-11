@@ -20,19 +20,19 @@ jobs:
 
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: BlackHole.360
+      working-directory: src/BlackHole.360
 
     - name: Build
       run: dotnet build BlackHole.360.Api --no-restore
-      working-directory: BlackHole.360
+      working-directory: src/BlackHole.360
 
     - name: Test
       run: dotnet test --no-build --verbosity normal
-      working-directory: BlackHole.360
+      working-directory: src/BlackHole.360
       
     - name: Publish
       run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
-      working-directory: BlackHole.360
+      working-directory: src/BlackHole.360
       
     - name: Upload artifact for deployment job 
       uses: actions/upload-artifact@v2 
