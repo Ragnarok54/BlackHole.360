@@ -2,8 +2,7 @@
 
 namespace BlackHole._360.Domain.Entities;
 
-public class Department : BaseEntity
+public class Department : BaseNamedEntity
 {
-
-    public virtual ICollection<Group> Groups { get; set; }
+    public ICollection<Group> Groups { get; set; } = new HashSet<Group>();
 }

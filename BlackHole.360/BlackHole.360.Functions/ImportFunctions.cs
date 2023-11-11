@@ -1,8 +1,7 @@
 using Azure.Identity;
-using Azure.Storage.Blobs;
+
+using BlackHole._360.BusinessLogic.DTO.Import;
 using BlackHole._360.BusinessLogic.Services;
-using BlackHole._360.DataAccess.Abstractions;
-using BlackHole._360.Domain.Enums;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
@@ -61,19 +60,19 @@ public class ImportFunctions
 
         await pageIterator.IterateAsync(cancellationToken);
 
-        var mappedUsers = list.Select(u => new Domain.Entities.User
+        var mappedUsers = list.Select(u => new ImportUserDto
         {
             InternalId = u.Id ?? string.Empty,
-            Name = u.DisplayName ?? string.Empty,
+            DisplayName = u.DisplayName ?? string.Empty,
             Email = u.UserPrincipalName ?? string.Empty,
-            JobTitleId = (JobTitle)Enum.Parse(typeof(JobTitle), u.JobTitle ?? "Unknown"),
-            //Role = u.Department,
+            JobTitle = u.JobTitle ?? string.Empty,
+            Department = u.Department ?? string.Empty,
             //DeletedAt = u.DeletedDateTime!.Value,
             //Deleted = 
         }).ToList();
 
         //var client = new BlobContainerClient(new Uri("https://127.0.0.1:10000/devstoreaccount1/container-name"), new DefaultAzureCredential());
-        await _importService.ImportUsersAsync(mappedUsers);
+        //await _importService.ImportUsersAsync(mappedUsers);
         _logger.LogInformation($"C# Timer trigger function finished file upload at: {DateTime.Now}");
     }
 

@@ -2,5 +2,5 @@
 
 public interface IPaginatedRepository<TEntity> : IRepository<TEntity> where TEntity : class
 {
-    Task<IEnumerable<TEntity>> GetAsync(int offset, int count, CancellationToken cancellationToken = default);
+    Task<IEnumerable<TEntity>> GetAsync(string search, int offset, int count, CancellationToken cancellationToken = default);
 }

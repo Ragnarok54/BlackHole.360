@@ -1,6 +1,5 @@
 ﻿using BlackHole._360.DataAccess.Abstractions;
 using BlackHole._360.DataAccess.Abstractions.Repositories;
-using BlackHole._360.DataAccess.Repositories;
 using BlackHole._360.Domain.Abstractions.Interfaces;
 using BlackHole._360.Domain.Entities;
 
@@ -16,13 +15,15 @@ public class UnitOfWork : IUnitOfWork
     private IPaginatedRepository<User> _userRepository = null!;
     private IRepository<Department> _departmentRepository = null!;
     private IRepository<Group> _groupRepository = null!;
-    private IRepository<SubGroup> _subGroupRepository = null!;
+    private ILocalRepository<SubGroup> _subGroupRepository = null!;
+    private IFeedbackRepository _feedbackRepository = null!;
 
 
     public IPaginatedRepository<User> UserRepository => InitService(ref _userRepository);
     public IRepository<Department> DepartmentRepository => InitService(ref _departmentRepository);
     public IRepository<Group> GroupRepository => InitService(ref _groupRepository);
-    public IRepository<SubGroup> SubGroupRepository => InitService(ref _subGroupRepository);
+    public ILocalRepository<SubGroup> SubGroupRepository => InitService(ref _subGroupRepository);
+    public IFeedbackRepository FeedbackRepository => InitService(ref _feedbackRepository);
 
 
     public UnitOfWork(IServiceProvider serviceProvider, BlackHoleContext context)
@@ -46,13 +47,13 @@ public class UnitOfWork : IUnitOfWork
         }
     }
 
-    public async Task<int> SaveChangesAsync()
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {
         try
         {
             PerformExtraOperations();
 
-            return await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync(cancellationToken);
         }
         catch (Exception ex)
         {

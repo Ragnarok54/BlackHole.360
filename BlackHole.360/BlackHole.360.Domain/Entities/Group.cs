@@ -2,11 +2,11 @@
 
 namespace BlackHole._360.Domain.Entities;
 
-public class Group : BaseEntity
+public class Group : BaseNamedEntity
 {
     public Guid DepartmentId { get; set; }
 
 
-    public virtual Department Department { get; set; }
-    public virtual ICollection<SubGroup> SubGroups { get; set; }
+    public Department Department { get; set; }
+    public ICollection<SubGroup> SubGroups { get; set; } = new HashSet<SubGroup>();
 }

@@ -52,6 +52,7 @@ builder.Services.AddSwaggerGen(options =>
 
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
 });
+builder.Services.AddApplicationInsightsTelemetry();
 
 
 var app = builder.Build();

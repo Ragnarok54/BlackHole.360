@@ -9,6 +9,6 @@ public class UserService : BaseService
     public async Task<UserDto> GetAsync(Guid id, CancellationToken cancellationToken = default) 
         => await UnitOfWork.UserRepository.GetAsync(id, cancellationToken) ?? throw new ArgumentException(null, nameof(id));
 
-    public async Task<IEnumerable<UserDto>> GetAsync(int offset, int count, CancellationToken cancellationToken = default)
-        => (await UnitOfWork.UserRepository.GetAsync(offset, count, cancellationToken)).Select(u => (UserDto)u);
+    public async Task<IEnumerable<UserDto>> GetAsync(string search, int offset, int count, CancellationToken cancellationToken = default)
+        => (await UnitOfWork.UserRepository.GetAsync(search, offset, count, cancellationToken)).Select(u => (UserDto)u);
 }

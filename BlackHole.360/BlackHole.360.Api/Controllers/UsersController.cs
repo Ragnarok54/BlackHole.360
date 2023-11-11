@@ -19,6 +19,6 @@ public class UsersController : BaseController
         => Ok(await _userService.GetAsync(id, cancellationToken));
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserDto>>> IndexAsync([FromQuery]int offset, [FromQuery]int count, CancellationToken cancellationToken)
-        => Ok(await _userService.GetAsync(offset, count, cancellationToken));
+    public async Task<ActionResult<IEnumerable<UserDto>>> IndexAsync([FromQuery]string search, [FromQuery]int offset, [FromQuery]int count, CancellationToken cancellationToken)
+        => Ok(await _userService.GetAsync(search, offset, count, cancellationToken));
 }

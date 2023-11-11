@@ -48,8 +48,8 @@ internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     public virtual void Add(TEntity entity)
         => _context.Set<TEntity>().Add(entity);
 
-    public virtual async Task AddAsync(TEntity entity)
-        => await _context.Set<TEntity>().AddAsync(entity);
+    public virtual async Task AddAsync(TEntity entity, CancellationToken cancellationToken)
+        => await _context.Set<TEntity>().AddAsync(entity, cancellationToken);
 
     public virtual void AddRange(IEnumerable<TEntity> entities) 
         => _context.Set<TEntity>().AddRange(entities);

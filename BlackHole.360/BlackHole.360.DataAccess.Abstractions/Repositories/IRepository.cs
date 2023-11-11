@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Threading;
 
 namespace BlackHole._360.DataAccess.Abstractions.Repositories;
 
@@ -16,7 +17,7 @@ public interface IRepository<TEntity> where TEntity : class
     Task<TEntity?> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 
     void Add(TEntity entity);
-    Task AddAsync(TEntity entity);
+    Task AddAsync(TEntity entity, CancellationToken cancellationToken);
     void AddRange(IEnumerable<TEntity> entities);
     Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
     void Remove(TEntity entity);
