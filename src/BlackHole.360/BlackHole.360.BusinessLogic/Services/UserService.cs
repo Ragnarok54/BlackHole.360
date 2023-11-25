@@ -2,10 +2,8 @@
 using BlackHole._360.DataAccess.Abstractions;
 
 namespace BlackHole._360.BusinessLogic.Services;
-public class UserService : BaseService
+public class UserService(IUnitOfWork unitOfWork) : BaseService(unitOfWork)
 {
-    public UserService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
-
     public async Task<UserDto> GetAsync(Guid id, CancellationToken cancellationToken = default) 
         => await UnitOfWork.UserRepository.GetAsync(id, cancellationToken) ?? throw new ArgumentException(null, nameof(id));
 

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
     <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -9,17 +9,17 @@
     <UserSecretsId>93bf3066-7b61-49ca-b674-dd3b24e0cad9</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.10.3" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.19.0" />
-    <PackageReference Include="Azure.Storage.Files.Shares" Version="12.17.0" />
-    <PackageReference Include="Azure.Storage.Queues" Version="12.17.0" />
+    <PackageReference Include="Azure.Identity" Version="1.10.4" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
+    <PackageReference Include="Azure.Storage.Files.Shares" Version="12.17.1" />
+    <PackageReference Include="Azure.Storage.Queues" Version="12.17.1" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.20.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Storage.Blobs" Version="6.2.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Timer" Version="4.3.0" />
-    <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.16.1" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.16.2" />
     <PackageReference Include="Microsoft.Extensions.Azure" Version="1.7.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Graph" Version="5.34.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Graph" Version="5.36.0" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.57.0" />
   </ItemGroup>
   <ItemGroup>

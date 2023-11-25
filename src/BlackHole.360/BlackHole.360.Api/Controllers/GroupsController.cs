@@ -6,18 +6,10 @@ using Microsoft.AspNetCore.OutputCaching;
 
 namespace BlackHole._360.Api.Controllers;
 
-public class GroupsController : BaseController
+public class GroupsController(GroupService groupService) : BaseController()
 {
-    private readonly GroupService _groupService;
-
-    public GroupsController(GroupService groupService) : base() 
-    {
-        _groupService = groupService;
-    }
-
-
     [HttpGet]
     [OutputCache]
     public async Task<ActionResult<UserDto>> IndexAsync(CancellationToken cancellationToken = default)
-        => Ok(await _groupService.GetAllAsync(cancellationToken));
+        => Ok(await groupService.GetAllAsync(cancellationToken));
 }

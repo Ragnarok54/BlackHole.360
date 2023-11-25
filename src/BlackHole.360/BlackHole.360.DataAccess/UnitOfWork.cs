@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BlackHole._360.DataAccess;
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork(IServiceProvider serviceProvider, BlackHoleContext context) : IUnitOfWork
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly BlackHoleContext _context;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
+    private readonly BlackHoleContext _context = context;
 
     private IPaginatedRepository<User> _userRepository = null!;
     private IRepository<Department> _departmentRepository = null!;
@@ -24,13 +24,6 @@ public class UnitOfWork : IUnitOfWork
     public IRepository<Group> GroupRepository => InitService(ref _groupRepository);
     public ILocalRepository<SubGroup> SubGroupRepository => InitService(ref _subGroupRepository);
     public IFeedbackRepository FeedbackRepository => InitService(ref _feedbackRepository);
-
-
-    public UnitOfWork(IServiceProvider serviceProvider, BlackHoleContext context)
-    {
-        _serviceProvider = serviceProvider;
-        _context = context;
-    }
 
     public int SaveChanges()
     {
