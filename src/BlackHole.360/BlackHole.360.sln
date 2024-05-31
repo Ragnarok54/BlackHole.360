@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackHole.360.BusinessLogic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackHole.360.Functions", "BlackHole.360.Functions\BlackHole.360.Functions.csproj", "{D20A0DA6-0F2B-4DF9-B758-0BD77CFA3057}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHole.360.Domain.Abstractions", "BlackHole.360.Domain.Abstractions\BlackHole.360.Domain.Abstractions.csproj", "{5EF4F57A-E43F-4E0C-9882-89CFF6908D3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackHole.360.Domain.Abstractions", "BlackHole.360.Domain.Abstractions\BlackHole.360.Domain.Abstractions.csproj", "{5EF4F57A-E43F-4E0C-9882-89CFF6908D3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHole.360.DataAccess.Abstractions", "BlackHole.360.DataAccess.Abstractions\BlackHole.360.DataAccess.Abstractions.csproj", "{6C8B190E-8FE9-41B8-8827-56D294F00CAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlackHole.360.DataAccess.Abstractions", "BlackHole.360.DataAccess.Abstractions\BlackHole.360.DataAccess.Abstractions.csproj", "{6C8B190E-8FE9-41B8-8827-56D294F00CAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

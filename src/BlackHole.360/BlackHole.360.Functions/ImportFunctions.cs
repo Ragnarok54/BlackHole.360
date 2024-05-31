@@ -39,7 +39,7 @@ public class ImportFunctions
 
         var usersCollectionResponse = await graphServiceClient.Users.GetAsync((requestConfiguration) =>
         {
-            requestConfiguration.QueryParameters.Select = new string[] { "displayName", "userPrincipalName", "jobTitle", "department", "id", "deletedDateTime", "userType" };
+            requestConfiguration.QueryParameters.Select = ["displayName", "userPrincipalName", "jobTitle", "department", "id", "deletedDateTime", "userType"];
             requestConfiguration.QueryParameters.Count = true;
             requestConfiguration.QueryParameters.Top = 999;
         }, cancellationToken);
