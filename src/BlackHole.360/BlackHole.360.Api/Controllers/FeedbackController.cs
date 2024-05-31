@@ -5,33 +5,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BlackHole._360.Api.Controllers;
 
-public class FeedbackController : BaseController
+public class FeedbackController(FeedbackService feedbackService) : BaseController()
 {
-    private readonly FeedbackService _feedbackService;
-
-    public FeedbackController(FeedbackService feedbackService) : base()
-    {
-        _feedbackService = feedbackService;
-    }
-
     [HttpGet]
     public async Task<ActionResult<FeedbackDto>> IndexAsync(CancellationToken cancellationToken = default)
-        => Ok(await _feedbackService.GetAddedAsync(CurrentUserId, cancellationToken));
+        => Ok(await feedbackService.GetAddedAsync(CurrentUserId, cancellationToken));
 
     [HttpGet("received")]
     public async Task<ActionResult<FeedbackReceivedDto>> ReceievdAsync(CancellationToken cancellationToken = default)
-        => Ok(await _feedbackService.GetReceivedAsync(CurrentUserId, cancellationToken));
+        => Ok(await feedbackService.GetReceivedAsync(CurrentUserId, cancellationToken));
 
     [HttpPost]
     public async Task<IActionResult> AddAsync([FromBody] FeedbackEditDto feedback, CancellationToken cancellationToken = default)
-        => CreatedAtAction(nameof(IndexAsync), await _feedbackService.AddAsync(feedback, CurrentUserId, cancellationToken));
+        => CreatedAtAction(nameof(IndexAsync), await feedbackService.AddAsync(feedback, CurrentUserId, cancellationToken));
 
     [HttpPatch("{feebackId}")]
     public async Task<IActionResult> UpdateAsync(Guid feebackId, [FromBody] string content, CancellationToken cancellationToken = default)
     {
-        if (await _feedbackService.BelongsToUserAsync(feebackId, CurrentUserId, cancellationToken))
+        if (await feedbackService.BelongsToUserAsync(feebackId, CurrentUserId, cancellationToken))
         {
-            await _feedbackService.UpdateAsync(feebackId, content, cancellationToken);
+            await feedbackService.UpdateAsync(feebackId, content, cancellationToken);
 
             return NoContent();
         }
@@ -44,9 +37,9 @@ public class FeedbackController : BaseController
     [HttpDelete("{feebackId}")]
     public async Task<IActionResult> DeleteAsync(Guid feebackId, CancellationToken cancellationToken = default)
     {
-        if (await _feedbackService.BelongsToUserAsync(feebackId, CurrentUserId, cancellationToken))
+        if (await feedbackService.BelongsToUserAsync(feebackId, CurrentUserId, cancellationToken))
         {
-            await _feedbackService.DeleteAsync(feebackId, cancellationToken);
+            await feedbackService.DeleteAsync(feebackId, cancellationToken);
 
             return Ok();
         }

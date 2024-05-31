@@ -2,10 +2,8 @@
 using BlackHole._360.DataAccess.Abstractions;
 
 namespace BlackHole._360.BusinessLogic.Services;
-public class FeedbackService : BaseService
+public class FeedbackService(IUnitOfWork unitOfWork) : BaseService(unitOfWork)
 {
-    public FeedbackService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
-
     public async Task<IEnumerable<FeedbackDto>> GetAddedAsync(Guid userId, CancellationToken cancellationToken)
         => (await UnitOfWork.FeedbackRepository.GetAddedAsync(userId, cancellationToken)).Select(f => (FeedbackAddedDto)f);
 

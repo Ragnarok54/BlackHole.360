@@ -1,8 +1,6 @@
 ﻿using BlackHole._360.DataAccess.Abstractions.Repositories;
 using BlackHole._360.Domain.Entities;
 
-using System.Threading;
-
 namespace BlackHole._360.DataAccess.Abstractions;
 
 public interface IUnitOfWork : IDisposable

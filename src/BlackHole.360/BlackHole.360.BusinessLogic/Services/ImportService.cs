@@ -8,10 +8,8 @@ using JobTitle = BlackHole._360.Domain.Enums.JobTitle;
 
 namespace BlackHole._360.BusinessLogic.Services;
 
-public class ImportService : BaseService
+public class ImportService(IUnitOfWork unitOfWork) : BaseService(unitOfWork)
 {
-    public ImportService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
-
     public async Task ImportUsersAsync(Stream stream, CancellationToken cancellationToken)
     {
         var importList = await JsonSerializer.DeserializeAsync<IEnumerable<ImportUserDto>>(stream, cancellationToken: cancellationToken) ?? Enumerable.Empty<ImportUserDto>();

@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 
 using System.Reflection;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Azure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +54,11 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
 });
 builder.Services.AddApplicationInsightsTelemetry();
+builder.Services.AddAzureClients(clientBuilder =>
+{
+    clientBuilder.AddBlobServiceClient(builder.Configuration["BlobStorage:blob"], preferMsi: true);
+    clientBuilder.AddQueueServiceClient(builder.Configuration["BlobStorage:queue"], preferMsi: true);
+});
 
 
 var app = builder.Build();
