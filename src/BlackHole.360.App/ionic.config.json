@@ -1,0 +1,7 @@
+{
+  "name": "BlackHole.360.App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
