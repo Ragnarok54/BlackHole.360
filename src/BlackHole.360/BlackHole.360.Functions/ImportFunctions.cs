@@ -9,7 +9,7 @@ using Microsoft.Graph.Models;
 
 namespace BlackHole._360.Functions;
 
-public class ImportFunctions
+public class ImportFunctions(ILoggerFactory loggerFactory, ImportService importService)
 {
 #if DEBUG
     const bool IS_DEBUG = true;
@@ -17,15 +17,9 @@ public class ImportFunctions
     const bool IS_DEBUG = false;
 #endif
 
-    private readonly ILogger _logger;
-    private readonly ImportService _importService;
+    private readonly ILogger _logger = loggerFactory.CreateLogger<ImportFunctions>();
+    private readonly ImportService _importService = importService;
 
-    public ImportFunctions(ILoggerFactory loggerFactory, ImportService importService)
-    {
-        _logger = loggerFactory.CreateLogger<ImportFunctions>();
-        _importService = importService;
-    }
-    
     [Function(nameof(DownloadActiveDirectoryUsers))]
     public async Task DownloadActiveDirectoryUsers([TimerTrigger("* * * * * *", RunOnStartup = IS_DEBUG)] TimerInfo timerInfo, CancellationToken cancellationToken)
     {
@@ -34,12 +28,12 @@ public class ImportFunctions
 
         var authenticationProvider = new DefaultAzureCredential();
         var graphServiceClient = new GraphServiceClient(authenticationProvider);
-
+        
         var list = new List<User>();
 
         var usersCollectionResponse = await graphServiceClient.Users.GetAsync((requestConfiguration) =>
         {
-            requestConfiguration.QueryParameters.Select = ["displayName", "userPrincipalName", "jobTitle", "department", "id", "deletedDateTime", "userType"];
+            //requestConfiguration.QueryParameters.Select = ["department"];//["displayName", "userPrincipalName", "jobTitle", "department", "id", "deletedDateTime", "userType"];
             requestConfiguration.QueryParameters.Count = true;
             requestConfiguration.QueryParameters.Top = 999;
         }, cancellationToken);

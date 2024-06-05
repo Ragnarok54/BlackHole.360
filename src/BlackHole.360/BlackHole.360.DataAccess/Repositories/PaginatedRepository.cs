@@ -10,7 +10,7 @@ internal class PaginatedRepository<TEntity> : Repository<TEntity>, IPaginatedRep
     public PaginatedRepository(BlackHoleContext context) : base(context) { }
 
 
-    public async Task<IEnumerable<TEntity>> GetAsync(string search, int offset, int count, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TEntity>> GetAsync(string? search, int offset, int count, CancellationToken cancellationToken = default)
         => await _context.Set<TEntity>().Where(e => string.IsNullOrEmpty(search) || e.Name.Contains(search))
                                         .Skip(offset)
                                         .Take(count)

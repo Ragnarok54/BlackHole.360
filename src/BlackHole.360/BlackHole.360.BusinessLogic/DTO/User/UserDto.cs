@@ -4,7 +4,8 @@ namespace BlackHole._360.BusinessLogic.DTO.User;
 
 public class UserDto
 {
-    public Guid UserId { get; set; }
+    public Guid Id { get; set; }
+    public required string Name { get; set; }
     public required string Email { get; set; }
     public JobTitle JobTitleId { get; set; }
     public Guid? SubgroupId { get; set; }
@@ -13,7 +14,8 @@ public class UserDto
     public static implicit operator UserDto(Domain.Entities.User user)
         => new()
         {
-            UserId = user.Id,
+            Id = user.Id,
+            Name = user.Name,
             Email = user.Email,
             JobTitleId = user.JobTitleId,
             SubgroupId = user.SubgroupId,
