@@ -3,5 +3,5 @@ import { BaseModel } from "../generic/base.model";
 
 export interface UserModel extends BaseModel {
     picture?: string;
-    jobTitle: JobTitle;
+    jobTitleId: JobTitle;
 }

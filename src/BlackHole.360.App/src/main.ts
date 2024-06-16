@@ -6,7 +6,10 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { MsalInterceptor, MSAL_INSTANCE, MsalInterceptorConfiguration, MsalGuardConfiguration, MSAL_GUARD_CONFIG, MSAL_INTERCEPTOR_CONFIG, MsalService, MsalGuard, MsalBroadcastService, MsalRedirectComponent } from '@azure/msal-angular';
+import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation, LogLevel, BrowserUtils } from '@azure/msal-browser';
+
 
 if (environment.production) {
   enableProdMode();
@@ -18,5 +21,72 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes),
     provideHttpClient(),
-  ],
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true
+    },
+    {
+        provide: MSAL_INSTANCE,
+        useFactory: MSALInstanceFactory
+    },
+    {
+        provide: MSAL_GUARD_CONFIG,
+        useFactory: MSALGuardConfigFactory
+    },
+    {
+        provide: MSAL_INTERCEPTOR_CONFIG,
+        useFactory: MSALInterceptorConfigFactory
+    },
+      MsalService,
+      MsalGuard,
+      MsalBroadcastService,
+      MsalRedirectComponent
+    ],
 });
+
+export function MSALInstanceFactory(): IPublicClientApplication {
+  return new PublicClientApplication({
+    auth: {
+      clientId: environment.msalConfig.auth.clientId,
+      authority: environment.msalConfig.auth.authority,
+      redirectUri: '/',
+      postLogoutRedirectUri: '/',
+    },
+    cache: {
+      cacheLocation: BrowserCacheLocation.LocalStorage,
+      storeAuthStateInCookie: false
+    },
+    system: {
+      allowNativeBroker: false, // Disables WAM Broker
+      loggerOptions: {
+        loggerCallback,
+        logLevel: LogLevel.Info,
+        piiLoggingEnabled: false
+      }
+    }
+  });
+}
+
+export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
+  const protectedResourceMap = new Map<string, Array<string>>();
+  protectedResourceMap.set(environment.apiConfig.uri, environment.apiConfig.scopes);
+
+  return {
+    interactionType: InteractionType.Redirect,
+    protectedResourceMap
+  };
+}
+
+export function MSALGuardConfigFactory(): MsalGuardConfiguration {
+  return {
+    interactionType: InteractionType.Redirect,
+    authRequest: {
+      scopes: ['user.read'],
+    },
+  };
+}
+
+export function loggerCallback(logLevel: LogLevel, message: string) {
+  console.log(message);
+}
