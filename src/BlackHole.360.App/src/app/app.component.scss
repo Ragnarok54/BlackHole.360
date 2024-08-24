@@ -117,3 +117,15 @@ ion-note {
 ion-item.selected {
   --color: var(--ion-color-primary);
 }
+
+ion-list ion-item {
+  --background: transparent; /* Makes the background of the ion-item transparent */
+  --color: inherit; /* Inherit text color from parent */
+  --border-color: transparent; /* Remove any border */
+  --ion-item-background: transparent; /* Ensures the background remains transparent */
+  --inner-border-width: 0; /* Remove the inner border */
+}
+
+ion-card-content ion-list {
+  background-color: transparent !important; /* Makes the background of the ion-list transparent */
+}

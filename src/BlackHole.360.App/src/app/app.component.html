@@ -4,11 +4,11 @@
       <ion-header>
         <ion-toolbar>
           <ion-title>
-            <ion-item>
-              <ion-thumbnail slot="start">
+            <ion-item lines="none" color="transparent">
+              <!-- <ion-thumbnail slot="start">
                 <ion-img src="../assets/icon/favicon.png" style="height: fit-content;"></ion-img>
-              </ion-thumbnail>
-              <ion-label>Facultatea de Automatica, Calculatoare si Electronica</ion-label>
+              </ion-thumbnail> -->
+              <ion-label>ACE Campus</ion-label>
             </ion-item>
           </ion-title>
         </ion-toolbar>
@@ -17,7 +17,7 @@
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header>{{authService.getName()}}</ion-list-header>
-          <ion-note>dasdas</ion-note>
+          <ion-note>{{authService.getEmail()}}</ion-note>
 
           <ion-menu-toggle auto-hide="false">
             <ion-item routerDirection="root" routerLink="home" lines="none" detail="false" routerLinkActive="selected">
@@ -41,13 +41,20 @@
           </ion-menu-toggle>
 
           <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection="root" routerLink="/feedback" lines="none" detail="false" routerLinkActive="selected">
+            <ion-item translucent routerDirection="root" routerLink="/feedback" lines="none" detail="false" routerLinkActive="selected">
               <ion-icon name="person-circle-outline" slot="start"></ion-icon>
               <ion-label>Feedback</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
+
+      <ion-footer translucent class="ion-padding" style="display: flex; justify-content: center;">
+        <ion-chip (click)="logout()">
+          <ion-icon name="log-out-outline"></ion-icon>
+          <ion-label>Logout</ion-label>
+        </ion-chip>
+      </ion-footer>
     </ion-menu>
 
     <ion-router-outlet id="main-content"></ion-router-outlet>

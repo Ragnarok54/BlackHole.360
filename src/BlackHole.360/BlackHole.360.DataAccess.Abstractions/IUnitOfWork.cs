@@ -11,6 +11,5 @@ public interface IUnitOfWork : IDisposable
     ILocalRepository<SubGroup> SubGroupRepository { get; }
     IFeedbackRepository FeedbackRepository { get; }
 
-    int SaveChanges();
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

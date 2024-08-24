@@ -22,6 +22,7 @@ public static class DependencyInjection
         services.AddScoped<IRepository<Department>, Repository<Department>>();
         services.AddScoped<IRepository<Group>, Repository<Group>>();
         services.AddScoped<IRepository<SubGroup>, Repository<SubGroup>>();
+        services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 
         return services;
     }

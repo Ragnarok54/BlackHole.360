@@ -14,7 +14,7 @@ public class FeedbackService(IUnitOfWork unitOfWork) : BaseService(unitOfWork)
     {
         var feedback = new Domain.Entities.Feedback
         {
-            FromUserId = currentUserId,
+            FromUserId = feedbackDto.IsAnonymous ? null : currentUserId,
             ToUserId = feedbackDto.ToUserId,
             Content = feedbackDto.Content,
         };
@@ -32,6 +32,15 @@ public class FeedbackService(IUnitOfWork unitOfWork) : BaseService(unitOfWork)
 
         feedback.Content = content;
 
+        await UnitOfWork.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task MakeAnonymousAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var feedback = await UnitOfWork.FeedbackRepository.GetAsync(id, cancellationToken) ?? throw new ArgumentException(null, nameof(id));
+
+        feedback.FromUserId = null;
+        
         await UnitOfWork.SaveChangesAsync(cancellationToken);
     }
 

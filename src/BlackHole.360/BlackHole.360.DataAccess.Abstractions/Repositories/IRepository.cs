@@ -15,6 +15,7 @@ public interface IRepository<TEntity> where TEntity : class
     IEnumerable<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
     TEntity? SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
     Task<TEntity?> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
+    Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
     void Add(TEntity entity);
     Task AddAsync(TEntity entity, CancellationToken cancellationToken);

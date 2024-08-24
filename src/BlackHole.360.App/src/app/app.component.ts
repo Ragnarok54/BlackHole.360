@@ -4,7 +4,7 @@ import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MsalBroadcastService, MsalRedirectComponent, MsalService } from '@azure/msal-angular';
 import { EventMessage, EventType, AuthenticationResult, InteractionStatus, InteractionType, PopupRequest, RedirectRequest } from '@azure/msal-browser';
-import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink, IonToolbar, IonHeader, IonTitle, IonImg, IonThumbnail } from '@ionic/angular/standalone';
+import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink, IonToolbar, IonHeader, IonTitle, IonImg, IonThumbnail, IonChip, IonFooter } from '@ionic/angular/standalone';
 import { Subject, filter, takeUntil } from 'rxjs';
 import { AuthService } from 'src/services/auth.service';
 
@@ -13,7 +13,7 @@ import { AuthService } from 'src/services/auth.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonThumbnail, IonImg, IonTitle, IonHeader, IonToolbar, RouterLink, RouterLinkActive, CommonModule, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterLink, IonRouterOutlet],
+  imports: [IonFooter, IonChip, IonThumbnail, IonImg, IonTitle, IonHeader, IonToolbar, RouterLink, RouterLinkActive, CommonModule, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterLink, IonRouterOutlet],
   providers: [HttpClient, MsalRedirectComponent]
 })
 export class AppComponent implements OnInit {
@@ -21,5 +21,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.authService.initialize();
+  }
+
+  logout(){
+    this.authService.logout();
   }
 }

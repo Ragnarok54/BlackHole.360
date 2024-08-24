@@ -1,9 +1,35 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Profiadadadadle</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Profile details</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding-5">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Profile Details</ion-card-title>
+    </ion-card-header>
 
+    <ion-card-content *ngIf="!!this.user">
+      <ion-list style="background-color: transparent;">
+        <ion-item color="transparent">
+          <ion-label position="floating">Name</ion-label>
+          <ion-input type="text" required [(ngModel)]="this.user!.name"></ion-input>
+        </ion-item>
+
+        <ion-item color="transparent">
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" disabled [(ngModel)]="this.user!.email"></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+
+<ion-footer class="ion-padding">
+  <ion-button expand="block" color="primary" onclick="updateProfile()">Update Profile</ion-button>
+</ion-footer>

@@ -2,7 +2,7 @@
 
 namespace BlackHole._360.BusinessLogic.DTO.Feedback;
 
-public class FeedbackDto : BaseDto
+public class FeedbackDto : IdentifiableDto
 {
     public required string Content { get; set; }
 
@@ -12,6 +12,5 @@ public class FeedbackDto : BaseDto
         {
             Id = feedback.Id,
             Content = feedback.Content,
-            Name = string.Empty,
         };
 }

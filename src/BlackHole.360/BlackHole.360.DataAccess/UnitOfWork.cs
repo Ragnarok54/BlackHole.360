@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BlackHole._360.DataAccess;
+
 public class UnitOfWork(IServiceProvider serviceProvider, BlackHoleContext context) : IUnitOfWork
 {
     private readonly IServiceProvider _serviceProvider = serviceProvider;
@@ -25,20 +26,6 @@ public class UnitOfWork(IServiceProvider serviceProvider, BlackHoleContext conte
     public ILocalRepository<SubGroup> SubGroupRepository => InitService(ref _subGroupRepository);
     public IFeedbackRepository FeedbackRepository => InitService(ref _feedbackRepository);
 
-    public int SaveChanges()
-    {
-        try
-        {
-            PerformExtraOperations();
-
-            return _context.SaveChanges();
-        }
-        catch (Exception ex)
-        {
-            // TODO: Log ex
-            throw ex;
-        }
-    }
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {

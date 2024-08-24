@@ -2,7 +2,7 @@
 
 public class FeedbackReceivedDto : FeedbackDto
 {
-    public required string FromUser { get; set; }
+    public string? FromUser { get; set; }
 
     public static implicit operator FeedbackReceivedDto(Domain.Entities.Feedback feedback)
         => new()
@@ -10,7 +10,6 @@ public class FeedbackReceivedDto : FeedbackDto
             Id = feedback.Id,
             Content = feedback.Content,
             FromUser = feedback.FromUser.Name,
-            Name = string.Empty,
         };
 
 }

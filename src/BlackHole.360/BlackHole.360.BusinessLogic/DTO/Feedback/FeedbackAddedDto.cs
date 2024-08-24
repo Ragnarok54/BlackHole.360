@@ -11,6 +11,5 @@ public class FeedbackAddedDto : FeedbackDto
         Id = feedback.Id,
         Content = feedback.Content,
         ToUser = feedback.ToUser.Name,
-        Name = string.Empty,
     };
 }

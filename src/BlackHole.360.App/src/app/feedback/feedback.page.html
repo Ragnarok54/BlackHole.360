@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Feedback</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-segment value="received" style="display: flex;">
+    <ion-segment-button value="received" style="flex: 1" (click)="getReceivedFeedback()">
+      <ion-label>Received</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="given" style="flex: 1" (click)="getGivenFeedback()">
+      <ion-label>Given</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button size="small">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

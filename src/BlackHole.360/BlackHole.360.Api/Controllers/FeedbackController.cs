@@ -34,6 +34,21 @@ public class FeedbackController(FeedbackService feedbackService) : BaseControlle
         }
     }
 
+    [HttpPatch("{feebackId}/anonymous")]
+    public async Task<IActionResult> AnonymousAsync(Guid feebackId, CancellationToken cancellationToken = default)
+    {
+        if (await feedbackService.BelongsToUserAsync(feebackId, CurrentUserId, cancellationToken))
+        {
+            await feedbackService.MakeAnonymousAsync(feebackId, cancellationToken);
+
+            return NoContent();
+        }
+        else
+        {
+            return Forbid();
+        }
+    }
+
     [HttpDelete("{feebackId}")]
     public async Task<IActionResult> DeleteAsync(Guid feebackId, CancellationToken cancellationToken = default)
     {

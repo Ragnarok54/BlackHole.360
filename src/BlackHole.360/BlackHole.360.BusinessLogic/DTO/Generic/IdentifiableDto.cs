@@ -2,7 +2,7 @@
 
 namespace BlackHole._360.BusinessLogic.DTO.Generic;
 
-public abstract class BaseDto : IdentifiableDto, INameEntity
+public abstract class IdentifiableDto : IIdentifiable
 {
-    public required string Name { get; set; }
+    public Guid Id { get; set; }
 }

@@ -5,14 +5,9 @@ using System.Linq.Expressions;
 
 namespace BlackHole._360.DataAccess.Repositories;
 
-internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+internal class Repository<TEntity>(BlackHoleContext context) : IRepository<TEntity> where TEntity : class
 {
-    private protected readonly BlackHoleContext _context;
-
-    public Repository(BlackHoleContext context)
-    {
-        _context = context;
-    }
+    private protected readonly BlackHoleContext _context = context;
 
     public TEntity? Get(int id) 
         => _context.Set<TEntity>().Find(id);
@@ -43,6 +38,9 @@ internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 
     public async Task<TEntity?> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         => await _context.Set<TEntity>().SingleOrDefaultAsync(predicate);
+
+    public async Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+        => await _context.Set<TEntity>().FirstOrDefaultAsync(predicate, cancellationToken);
 
 
     public virtual void Add(TEntity entity)

@@ -18,4 +18,13 @@ export class UserService {
   public getUser(name: string): Observable<UserModel>{
     return this.httpClient.get<UserModel>(`${this.baseUrl}/${name}`);
   }
+
+  public getByInternalId(id: string): Observable<UserModel>{
+    return this.httpClient.get<UserModel>(`${this.baseUrl}/internal/${id}`);
+  }
+  
+  public updateUser(user: UserModel): Observable<UserModel>{
+    return this.httpClient.put<UserModel>(`${this.baseUrl}/${user.id}`, user);
+  }
+
 }

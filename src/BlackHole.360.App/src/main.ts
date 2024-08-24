@@ -61,7 +61,7 @@ export function MSALInstanceFactory(): IPublicClientApplication {
       allowNativeBroker: false, // Disables WAM Broker
       loggerOptions: {
         loggerCallback,
-        logLevel: LogLevel.Info,
+        logLevel: LogLevel.Warning,
         piiLoggingEnabled: false
       }
     }
@@ -88,5 +88,5 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
 }
 
 export function loggerCallback(logLevel: LogLevel, message: string) {
-  console.log(message);
+  //console.log(message);
 }

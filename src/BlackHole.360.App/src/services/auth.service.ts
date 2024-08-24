@@ -1,8 +1,8 @@
 import { Inject, Injectable, OnInit, inject } from '@angular/core';
 import { BaseModel } from 'src/models/generic/base.model';
 import { MsalService, MsalBroadcastService, MSAL_GUARD_CONFIG, MsalGuardConfiguration } from '@azure/msal-angular';
-import { EventMessage, EventType, AuthenticationResult, InteractionStatus, InteractionType, PopupRequest, RedirectRequest } from '@azure/msal-browser';
-import { Subject, filter, takeUntil } from 'rxjs';
+import { EventMessage, EventType, AuthenticationResult, InteractionStatus, InteractionType, PopupRequest, RedirectRequest, AccountInfo } from '@azure/msal-browser';
+import { BehaviorSubject, Observable, Subject, filter, takeUntil } from 'rxjs';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -13,9 +13,10 @@ export class AuthService {
   private msalService: MsalService = inject(MsalService);
   private msalBroadcastService: MsalBroadcastService = inject(MsalBroadcastService);
   private userService: UserService = inject(UserService);
+  private user$: Subject<AccountInfo | null> = new BehaviorSubject<AccountInfo | null>(null);
 
   public isAuthenticated: boolean = false;
-  public user$: Subject<BaseModel | undefined> = new Subject();
+  public user: Observable<AccountInfo | null> = this.user$.asObservable();
 
   constructor(@Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration){
     this.msalBroadcastService.msalSubject$
@@ -30,7 +31,11 @@ export class AuthService {
         if (this.msalService.instance.getAllAccounts().length === 0) {
           window.location.pathname = '/';
         } else {
-          //this.setLoginDisplay();
+          this.user$.next(this.msalService.instance.getActiveAccount());
+          // //this.setLoginDisplay();
+          // this.userService.getUser(this.msalService.instance.getActiveAccount()?.localAccountId!).subscribe(user => {
+          //   this.user$.next(user);
+          // });
         }
       });
 
@@ -42,13 +47,14 @@ export class AuthService {
         takeUntil(this._destroying$)
       )
       .subscribe(() => {
+        this.user$.next(this.msalService.instance.getActiveAccount());
         //this.setLoginDisplay();
         this.checkAndSetActiveAccount();
       });
   }
 
   checkAndSetActiveAccount() {
-    /**
+     /**
      * If no active account set but there are accounts signed in, sets first account to active account
      * To use active account set here, subscribe to inProgress$ first in your component
      * Note: Basic usage demonstrated. Your app may require more complicated account selection logic
@@ -62,7 +68,7 @@ export class AuthService {
       this.userService
         .getUser(this.msalService.instance.getActiveAccount()?.localAccountId!)
         .subscribe(user => {
-          this.user$.next(user);
+          //this.user$.next(user);
         });
     }
   }
@@ -85,7 +91,7 @@ export class AuthService {
 
   logout() {
     this.msalService.logoutRedirect();
-    this.user$.next(undefined);
+    this.user$.next(null);
   }
 
   isLoggedIn(): boolean {
@@ -95,5 +101,10 @@ export class AuthService {
   getName(): string {
     const account = this.msalService.instance.getActiveAccount();
     return account ? account.name! : '';
+  }
+
+  getEmail(): string {
+    const account = this.msalService.instance.getActiveAccount();
+    return account ? account.username! : '';
   }
 }
