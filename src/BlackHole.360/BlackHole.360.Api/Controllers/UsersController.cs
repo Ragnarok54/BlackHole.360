@@ -21,7 +21,7 @@ public class UsersController(UserService userService) : BaseController()
 
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateProfileAsync([FromQuery] Guid id, [FromBody]UserDto user, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> UpdateProfileAsync(Guid id, [FromBody]UserDto user, CancellationToken cancellationToken = default)
     {
         await userService.UpdateAsync(id, user, cancellationToken);
         

@@ -22,7 +22,7 @@ internal class Repository<TEntity>(BlackHoleContext context) : IRepository<TEnti
         => _context.Set<TEntity>().ToList();
 
     public async Task<IEnumerable<TEntity>> GetAllAsync()
-        => await _context.Set<TEntity>().ToListAsync();
+        => await _context.Set<TEntity>().AsNoTracking().ToListAsync();
 
     public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken)
         => await _context.Set<TEntity>().ToListAsync(cancellationToken);

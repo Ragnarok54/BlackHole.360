@@ -19,4 +19,16 @@ export class FeedbackService {
   public getReceived(): Observable<FeedbackModel[]>{
     return this.httpClient.get<FeedbackModel[]>(`${this.baseUrl}/received`);
   }
+
+  public addFeedback(feedback: FeedbackModel): Observable<void>{
+    return this.httpClient.post<void>(`${this.baseUrl}`, feedback);
+  }
+
+  public updateFeedback(feedbackId: string, content: string): Observable<void>{
+    return this.httpClient.patch<void>(`${this.baseUrl}/${feedbackId}`, content);
+  }
+
+  public makeAnonymous(feedbackId: string): Observable<void>{
+    return this.httpClient.patch<void>(`${this.baseUrl}/${feedbackId}/anonymous`, null);
+  }
 }

@@ -20,6 +20,8 @@ export class OverviewPage implements OnInit {
   private fetchCount: number = 50;
   private userService = inject(UserService);
   
+  protected search: string | null = null;
+
   public users: UserModel[] = [];
 
   ngOnInit(): void {
@@ -28,11 +30,16 @@ export class OverviewPage implements OnInit {
  
   protected fetchData(event: IonInfiniteScrollCustomEvent<void> | null = null): void {
     this.userService
-      .getUsers(this.users.length, this.fetchCount)
+      .getUsers(this.search, this.users.length, this.fetchCount)
       .pipe(first())
       .subscribe(newChanges => {
         this.users = this.users.concat(newChanges);
          (event as IonInfiniteScrollCustomEvent<void>)?.target.complete();
       });
+  }
+
+  protected searchUsers(): void {
+    this.users = [];
+    this.fetchData();
   }
 }

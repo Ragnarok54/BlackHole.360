@@ -40,7 +40,7 @@ namespace BlackHole._360.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("BlackHole._360.Domain.Entities.Feedback", b =>
@@ -103,7 +103,7 @@ namespace BlackHole._360.DataAccess.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Groups", (string)null);
                 });
 
             modelBuilder.Entity("BlackHole._360.Domain.Entities.JobTitle", b =>
@@ -160,7 +160,7 @@ namespace BlackHole._360.DataAccess.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("SubGroups");
+                    b.ToTable("SubGroups", (string)null);
                 });
 
             modelBuilder.Entity("BlackHole._360.Domain.Entities.User", b =>

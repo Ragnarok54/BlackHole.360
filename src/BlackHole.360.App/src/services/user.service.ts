@@ -11,8 +11,14 @@ export class UserService {
   private baseUrl = environment.baseApiUrl + 'users';
   private httpClient = inject(HttpClient);
 
-  public getUsers(offset: number, count: number): Observable<UserModel[]>{
-    return this.httpClient.get<UserModel[]>(`${this.baseUrl}?offset=${offset}&count=${count}`);
+  public getUsers(search: string | null, offset: number | null = null, count: number | null = null): Observable<UserModel[]>{
+    var route = this.baseUrl;
+
+    route += `?search=${search ? search : ''}`;
+    route += `&offset=${offset ? offset : 0}`;
+    route += `&count=${count ? count : 100000}`;
+
+    return this.httpClient.get<UserModel[]>(route);
   }
 
   public getUser(name: string): Observable<UserModel>{
@@ -26,5 +32,4 @@ export class UserService {
   public updateUser(user: UserModel): Observable<UserModel>{
     return this.httpClient.put<UserModel>(`${this.baseUrl}/${user.id}`, user);
   }
-
 }
