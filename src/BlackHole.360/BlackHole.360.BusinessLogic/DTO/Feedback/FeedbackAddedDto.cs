@@ -10,6 +10,7 @@ public class FeedbackAddedDto : FeedbackDto
     {
         Id = feedback.Id,
         Content = feedback.Content,
+        CreatedOn = feedback.CreatedOn,
         ToUser = feedback.ToUser.Name,
     };
 }

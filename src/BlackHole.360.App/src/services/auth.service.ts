@@ -107,4 +107,9 @@ export class AuthService {
     const account = this.msalService.instance.getActiveAccount();
     return account ? account.username! : '';
   }
+
+  getId(): string {
+    const account = this.msalService.instance.getActiveAccount();
+    return account ? account.localAccountId! : '';
+  }
 }

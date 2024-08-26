@@ -12,6 +12,6 @@ public class Feedback : BaseEntity, ISoftDelete
     public DateTime? DeletedAt { get; set; }
 
 
-    public User FromUser { get; set; } = null!;
+    public User? FromUser { get; set; }
     public User ToUser { get; set; } = null!;
 }

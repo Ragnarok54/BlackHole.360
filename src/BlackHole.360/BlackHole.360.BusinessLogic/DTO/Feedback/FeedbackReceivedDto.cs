@@ -9,7 +9,8 @@ public class FeedbackReceivedDto : FeedbackDto
         {
             Id = feedback.Id,
             Content = feedback.Content,
-            FromUser = feedback.FromUser.Name,
+            CreatedOn = feedback.CreatedOn,
+            FromUser = feedback.FromUser?.Name,
         };
 
 }

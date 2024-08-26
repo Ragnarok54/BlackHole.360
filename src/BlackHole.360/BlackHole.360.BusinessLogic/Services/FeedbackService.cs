@@ -2,26 +2,29 @@
 using BlackHole._360.DataAccess.Abstractions;
 
 namespace BlackHole._360.BusinessLogic.Services;
-public class FeedbackService(IUnitOfWork unitOfWork) : BaseService(unitOfWork)
+public class FeedbackService(IUnitOfWork unitOfWork, UserService userService) : BaseService(unitOfWork)
 {
-    public async Task<IEnumerable<FeedbackDto>> GetAddedAsync(Guid userId, CancellationToken cancellationToken)
-        => (await UnitOfWork.FeedbackRepository.GetAddedAsync(userId, cancellationToken)).Select(f => (FeedbackAddedDto)f);
+    public async Task<IEnumerable<FeedbackAddedDto>> GetAddedAsync(Guid userId, CancellationToken cancellationToken)
+        => (await UnitOfWork.FeedbackRepository.GetAddedAsync(await userService.GetIdByInternalAsync(userId, cancellationToken), cancellationToken)).Select(f => (FeedbackAddedDto)f);
 
     public async Task<IEnumerable<FeedbackReceivedDto>> GetReceivedAsync(Guid userId, CancellationToken cancellationToken)
-        => (await UnitOfWork.FeedbackRepository.GetReceivedAsync(userId, cancellationToken)).Select(f => (FeedbackReceivedDto)f);
+        => (await UnitOfWork.FeedbackRepository.GetReceivedAsync(await userService.GetIdByInternalAsync(userId, cancellationToken), cancellationToken)).Select(f => (FeedbackReceivedDto)f);
 
     public async Task<FeedbackAddedDto> AddAsync(FeedbackEditDto feedbackDto, Guid currentUserId, CancellationToken cancellationToken)
     {
+        var userId = await userService.GetIdByInternalAsync(currentUserId, cancellationToken);
+
         var feedback = new Domain.Entities.Feedback
         {
-            FromUserId = feedbackDto.IsAnonymous ? null : currentUserId,
+            FromUserId = feedbackDto.IsAnonymous ? null : userId,
             ToUserId = feedbackDto.ToUserId,
             Content = feedbackDto.Content,
         };
 
         await UnitOfWork.FeedbackRepository.AddAsync(feedback, cancellationToken);
-
         await UnitOfWork.SaveChangesAsync(cancellationToken);
+
+        feedback = await UnitOfWork.FeedbackRepository.GetWithUserAsync(feedback.Id, cancellationToken);
 
         return feedback;
     }

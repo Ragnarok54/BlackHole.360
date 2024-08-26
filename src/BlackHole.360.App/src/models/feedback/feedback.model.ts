@@ -5,5 +5,6 @@ export interface FeedbackModel {
     content: string;
     isAnonymous: boolean;
     toUserId?: string;
+    toUser?: string;
     createdOn?: Date;
 }

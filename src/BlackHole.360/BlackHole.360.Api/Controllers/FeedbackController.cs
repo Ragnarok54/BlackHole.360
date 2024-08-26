@@ -1,6 +1,6 @@
 ﻿using BlackHole._360.BusinessLogic.DTO.Feedback;
 using BlackHole._360.BusinessLogic.Services;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlackHole._360.Api.Controllers;
@@ -17,7 +17,7 @@ public class FeedbackController(FeedbackService feedbackService) : BaseControlle
 
     [HttpPost]
     public async Task<IActionResult> AddAsync([FromBody] FeedbackEditDto feedback, CancellationToken cancellationToken = default)
-        => CreatedAtAction(nameof(IndexAsync), await feedbackService.AddAsync(feedback, CurrentUserId, cancellationToken));
+        => Ok(await feedbackService.AddAsync(feedback, CurrentUserId, cancellationToken));
 
     [HttpPatch("{feebackId}")]
     public async Task<IActionResult> UpdateAsync(Guid feebackId, [FromBody] string content, CancellationToken cancellationToken = default)

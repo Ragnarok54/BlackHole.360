@@ -17,6 +17,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class FeedbackPage implements AfterViewInit {
   @ViewChild('searchUsersModal') searchUsersModal: IonModal | undefined;
+  @ViewChild('feedbackModal') feedbackModal: IonModal | undefined;
 
   private feedbackSerivce: FeedbackService = inject(FeedbackService);
   private userService: UserService = inject(UserService);
@@ -65,11 +66,11 @@ export class FeedbackPage implements AfterViewInit {
   }
   
 
-  public sendFeedback(content: string, userId: string){
+  public sendFeedback(){
     let feedback: FeedbackModel = {
-      content: content,
+      content: this.content,
       isAnonymous: false,
-      toUserId: userId
+      toUserId: this.selectedUser!.id
     };
 
     this.feedbackSerivce.addFeedback(feedback).subscribe(() => {
@@ -83,8 +84,9 @@ export class FeedbackPage implements AfterViewInit {
             role: 'dismiss'
           }
         ]
-      });
+      }).then(toast => {toast.present();});
       
+      this.feedbackModal?.dismiss();
       this.getGivenFeedback();
     });
   }

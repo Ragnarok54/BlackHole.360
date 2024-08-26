@@ -5,11 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BlackHole._360.DataAccess.Repositories;
 
-internal class FeedbackRepository : Repository<Feedback>, IFeedbackRepository
+internal class FeedbackRepository(BlackHoleContext context) : Repository<Feedback>(context), IFeedbackRepository
 {
-    public FeedbackRepository(BlackHoleContext context) : base(context) { }
-
-
     public async Task<IEnumerable<Feedback>> GetAddedAsync(Guid userId, CancellationToken cancellationToken)
         => await _context.Set<Feedback>().Where(f => f.FromUserId == userId)
                                          .Include(f => f.ToUser)
@@ -21,4 +18,9 @@ internal class FeedbackRepository : Repository<Feedback>, IFeedbackRepository
                                          .Where(f => f.ToUserId == userId)
                                          .AsSplitQuery()
                                          .ToListAsync(cancellationToken);
+
+    public async Task<Feedback> GetWithUserAsync(Guid id, CancellationToken cancellationToken)
+        => await _context.Set<Feedback>().Include(f => f.FromUser)
+                                         .Include(f => f.ToUser)
+                                         .FirstAsync(f => f.Id == id, cancellationToken);
 }
