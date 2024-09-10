@@ -42,7 +42,7 @@ builder.Services.AddConfiguration(builder.Configuration)
 builder.Services.AddHealthChecks()
                 .AddDataAccessHealthChecks();
 
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddEndpointsApiExplorer().AddHttpClient();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo

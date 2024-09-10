@@ -1,6 +1,6 @@
 export interface NewsModel {
     link: string;
-    imgLink: string;
+    imageLink: string;
     title: string;
     date: string;
     content: string;
