@@ -2,6 +2,7 @@ using Azure.Identity;
 
 using BlackHole._360.BusinessLogic.DTO.Import;
 using BlackHole._360.BusinessLogic.Services;
+
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
@@ -21,7 +22,7 @@ public class ImportFunctions(ILoggerFactory loggerFactory, ImportService importS
     private readonly ImportService _importService = importService;
 
     [Function(nameof(DownloadActiveDirectoryUsers))]
-    public async Task DownloadActiveDirectoryUsers([TimerTrigger("* * * * * *", RunOnStartup = IS_DEBUG)] TimerInfo timerInfo, CancellationToken cancellationToken)
+    public async Task DownloadActiveDirectoryUsers([TimerTrigger("0 0 * * *", RunOnStartup = IS_DEBUG)] TimerInfo timerInfo, CancellationToken cancellationToken)
     {
         _logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
         _logger.LogInformation($"Next timer schedule at: {timerInfo.ScheduleStatus?.Next}");
@@ -33,7 +34,7 @@ public class ImportFunctions(ILoggerFactory loggerFactory, ImportService importS
 
         var usersCollectionResponse = await graphServiceClient.Users.GetAsync((requestConfiguration) =>
         {
-            //requestConfiguration.QueryParameters.Select = ["department"];//["displayName", "userPrincipalName", "jobTitle", "department", "id", "deletedDateTime", "userType"];
+            requestConfiguration.QueryParameters.Select = ["displayName", "userPrincipalName", "jobTitle", "department", "id", "deletedDateTime", "userType"];
             requestConfiguration.QueryParameters.Count = true;
             requestConfiguration.QueryParameters.Top = 999;
         }, cancellationToken);
@@ -66,7 +67,7 @@ public class ImportFunctions(ILoggerFactory loggerFactory, ImportService importS
         }).ToList();
 
         //var client = new BlobContainerClient(new Uri("https://127.0.0.1:10000/devstoreaccount1/container-name"), new DefaultAzureCredential());
-        //await _importService.ImportUsersAsync(mappedUsers);
+        await _importService.ImportUsersAsync(mappedUsers, cancellationToken);
         _logger.LogInformation($"C# Timer trigger function finished file upload at: {DateTime.Now}");
     }
 

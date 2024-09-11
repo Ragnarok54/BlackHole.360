@@ -2,41 +2,42 @@
 using BlackHole._360.DataAccess.Abstractions;
 using BlackHole._360.Domain.Entities;
 
-using System.Text.Json;
-
 using JobTitle = BlackHole._360.Domain.Enums.JobTitle;
 
 namespace BlackHole._360.BusinessLogic.Services;
 
 public class ImportService(IUnitOfWork unitOfWork) : BaseService(unitOfWork)
 {
-    public async Task ImportUsersAsync(Stream stream, CancellationToken cancellationToken)
+    public async Task ImportUsersAsync(IEnumerable<ImportUserDto> importList, CancellationToken cancellationToken)
     {
-        var importList = await JsonSerializer.DeserializeAsync<IEnumerable<ImportUserDto>>(stream, cancellationToken: cancellationToken) ?? Enumerable.Empty<ImportUserDto>();
+        //var importList = await JsonSerializer.DeserializeAsync<IEnumerable<ImportUserDto>>(stream, cancellationToken: cancellationToken) ?? Enumerable.Empty<ImportUserDto>();
 
         var importDepartmentDetails = new List<ImportDepartmentDetailsDto>();
 
         foreach (var importUser in importList)
         {
-            var department = string.Concat(importUser.Department.TakeWhile(char.IsLetter));
-            var group = importUser.Department.TrimStart(department.ToCharArray()).First().ToString();
-            var subgroup = importUser.Department.Reverse().TakeWhile(c => c != '.').Reverse().ToString();
-
-            importUser.DepartmentDetails = new ImportDepartmentDetailsDto
+            if (!string.IsNullOrEmpty(importUser.Department))
             {
-                Department = department,
-                Group = group,
-                Subgroup = subgroup
-            };
+                var department = string.Concat(importUser.Department?.TakeWhile(char.IsLetter) ?? string.Empty);
+                var group = importUser.Department?.TrimStart(department.ToCharArray()).FirstOrDefault().ToString();
+                var subgroup = string.Concat(importUser.Department?.Reverse().TakeWhile(c => c != '.').Reverse() ?? []);
 
-            importDepartmentDetails.Add(importUser.DepartmentDetails);
+                importUser.DepartmentDetails = new ImportDepartmentDetailsDto
+                {
+                    Department = department,
+                    Group = group,
+                    Subgroup = subgroup
+                };
+
+                importDepartmentDetails.Add(importUser.DepartmentDetails);
+            }
         }
 
         var subGroupMap = await ImportDeparmentDetailsAsync(importDepartmentDetails, cancellationToken);
 
         foreach (var importUser in importList)
         {
-            var jobTitle = (JobTitle)Enum.Parse(typeof(JobTitle), importUser.JobTitle ?? "Unknown");
+            var jobTitle = (JobTitle)Enum.Parse(typeof(JobTitle), string.IsNullOrEmpty(importUser.JobTitle) ? "Unknown" : importUser.JobTitle);
 
             var user = new User
             {
@@ -44,7 +45,7 @@ public class ImportService(IUnitOfWork unitOfWork) : BaseService(unitOfWork)
                 Name = importUser.DisplayName,
                 Email = importUser.Email,
                 JobTitleId = jobTitle,
-                SubGroup = subGroupMap[importUser.DepartmentDetails!]
+                SubGroup = importUser.DepartmentDetails != null?  subGroupMap[importUser.DepartmentDetails!] : null,
             };
 
             await UnitOfWork.UserRepository.AddAsync(user, cancellationToken);
@@ -56,7 +57,7 @@ public class ImportService(IUnitOfWork unitOfWork) : BaseService(unitOfWork)
     public async Task<IDictionary<ImportDepartmentDetailsDto, SubGroup>> ImportDeparmentDetailsAsync(IEnumerable<ImportDepartmentDetailsDto> importDepartmentDetails, CancellationToken cancellationToken)
     {
         var subgroupDictionary = new Dictionary<ImportDepartmentDetailsDto, SubGroup>();
-        var importDepartments = importDepartmentDetails.GroupBy(a => a.Department);
+        var importDepartments = importDepartmentDetails.Distinct().GroupBy(a => a.Department).ToList();
 
         foreach (var importDepartment in importDepartments)
         {
