@@ -89,5 +89,5 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
 }
 
 export function loggerCallback(logLevel: LogLevel, message: string) {
-  //console.log(message);
+  console.log(message);
 }
