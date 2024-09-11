@@ -9,6 +9,7 @@ public class UserDto
     public required string Email { get; set; }
     public JobTitle JobTitleId { get; set; }
     public Guid? SubgroupId { get; set; }
+    public string? Department { get; set; }
 
 
     public static implicit operator UserDto(Domain.Entities.User user)
@@ -19,5 +20,6 @@ public class UserDto
             Email = user.Email,
             JobTitleId = user.JobTitleId,
             SubgroupId = user.SubgroupId,
+            Department = string.IsNullOrEmpty(user.SubGroup?.Name) ? string.Empty: user.SubGroup?.Group.Department.Name + user.SubGroup?.Group.Name + "." + user.SubGroup?.Name
         };
 }

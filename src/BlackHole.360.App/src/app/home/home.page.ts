@@ -25,4 +25,7 @@ export class HomePage implements OnInit{
     });
   }
 
+  openLink(link: string): void{
+    window.open(link);
+  }
 }

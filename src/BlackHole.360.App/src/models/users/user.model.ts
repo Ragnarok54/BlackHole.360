@@ -5,4 +5,5 @@ export interface UserModel extends BaseModel {
     email: string;
     picture?: string;
     jobTitleId: JobTitle;
+    department: string;
 }
